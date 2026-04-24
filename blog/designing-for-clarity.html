@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Designing for clarity — Lumen Analytics</title>
+  <meta name="description" content="A tour through the design decisions behind Lumen's new dashboard — and the ones we undid.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Blog</a>
+        <a href="../docs/index.html">Docs</a>
+        <a href="../shop/index.html">Shop</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="article container" tx-tags="blog">
+      <header class="prose">
+        <div class="tag">Design</div>
+        <h1>Designing for clarity: what we learned redesigning our dashboard.</h1>
+        <div class="meta">
+          <span class="notranslate">Sofia Romano</span>
+          <span>·</span>
+          <time datetime="2026-01-30"><var>Jan 30, 2026</var></time>
+          <span>·</span>
+          <span>5 min read</span>
+        </div>
+      </header>
+
+      <div class="article-body prose">
+        <p>The Lumen dashboard has had the same shape since our first release. It served us well. It also picked up barnacles — widgets, menus, little toggles added in a hurry and never removed. Last quarter we rebuilt it. Here's what changed, and what we tried and abandoned.</p>
+
+        <h2>The problem wasn't the charts</h2>
+        <p>Going in, we assumed the rewrite would be about charts — better types, faster rendering, more configurability. We were wrong. The charts were fine. The problem was everything <em>around</em> the charts: filters, time ranges, comparisons, saved views. Users told us they spent more time searching for a saved report than reading the report itself.</p>
+
+        <h2>A hierarchy of decisions</h2>
+        <p>When someone opens a dashboard, they're making a sequence of decisions. We listed every decision out loud, in order:</p>
+
+        <ol>
+          <li>"Am I looking at the right thing?"</li>
+          <li>"Is the time range right?"</li>
+          <li>"What am I comparing it against?"</li>
+          <li>"Are there any filters applied I should know about?"</li>
+          <li>"What's the chart telling me?"</li>
+        </ol>
+
+        <p>Then we made the UI answer them in that order, top-to-bottom. Dashboard name and audience at the top. Time range just below. Comparison and filters in a single row that's visible without scrolling. The chart itself gets the whole bottom half of the screen.</p>
+
+        <blockquote>A good design answers the user's next question before they think to ask it.</blockquote>
+
+        <h2>Things we tried and removed</h2>
+        <p>A surprising amount of the redesign was removing things we'd already built:</p>
+        <ul>
+          <li>A "power mode" that showed every filter at once. It looked impressive. Nobody used it.</li>
+          <li>Inline annotations on charts. Good idea, wrong venue — we moved them to a side panel.</li>
+          <li>A floating action menu that followed the cursor. Felt magical in the prototype. Felt nauseating in use.</li>
+        </ul>
+
+        <h2>Type and density</h2>
+        <p>The biggest visual change is density. The old dashboard was a 12px world — lots of labels, lots of numbers, lots of chrome. The new one is closer to 14–15px everywhere, with <code class="notranslate">letter-spacing: -0.02em</code> on the larger headings so they don't look floaty. Fewer elements, each a little bigger, each easier to read.</p>
+
+        <p>We also made peace with white space. The old dashboard was 80% information, 20% chrome, 0% breathing room. The new one leaves a little air around every group — not enough to feel empty, but enough that the eye has somewhere to rest.</p>
+
+        <h2>What's next</h2>
+        <p>We're not done. There's a long tail of smaller pieces — exports, share sheets, embedded views — that we'll rework over the next quarter. And we're still learning from how people use the new dashboard. If something feels off, tell us. We're listening.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: 0; padding: 0;">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+        <span><a href="index.html">← Back to blog</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+</body>
+</html>

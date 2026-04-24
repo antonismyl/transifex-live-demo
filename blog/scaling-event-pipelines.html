@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaling our event pipeline — Lumen Analytics</title>
+  <meta name="description" content="Partitioning, back-pressure, and why we finally moved off Kafka for the hot path.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Blog</a>
+        <a href="../docs/index.html">Docs</a>
+        <a href="../shop/index.html">Shop</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="article container" tx-tags="blog">
+      <header class="prose">
+        <div class="tag">Engineering</div>
+        <h1>Scaling our event pipeline to a billion events a day.</h1>
+        <div class="meta">
+          <span class="notranslate">Marcus Lindqvist</span>
+          <span>·</span>
+          <time datetime="2026-02-24"><var>Feb 24, 2026</var></time>
+          <span>·</span>
+          <span>9 min read</span>
+        </div>
+      </header>
+
+      <div class="article-body prose">
+        <p>A year ago, Lumen's event pipeline peaked somewhere around 40,000 events per second. Today we sit comfortably above 12,000 per second on an average Tuesday, and our weekly peaks cross a billion events per day. The shape of that growth forced us to revisit almost every piece of the ingestion path.</p>
+
+        <h2>The old architecture</h2>
+        <p>For the first two years, ingestion looked like most textbook event pipelines: an HTTP front-door written in <code class="notranslate">Go</code>, a <code class="notranslate">Kafka</code> buffer, a set of stateless enrichment workers, and a columnar store (<code class="notranslate">ClickHouse</code>) as the final destination. It worked. Until it didn't.</p>
+
+        <p>The failure mode wasn't capacity — Kafka scales much further than we needed. It was <em>tail latency</em>. Customer SDKs retry aggressively; when enrichment workers fell behind, the Kafka lag alarms would fire and the on-call engineer would page. The fix was almost always horizontal — add partitions, add workers — but the coupling was uncomfortable.</p>
+
+        <h2>What we changed</h2>
+        <p>We made three changes, in order of increasing scariness:</p>
+
+        <ol>
+          <li>Introduced an <strong>in-process buffer</strong> at the HTTP front-door with explicit back-pressure. Overloaded workers return <code class="notranslate">429</code>, the SDK retries with jitter, the caller is never blocked.</li>
+          <li>Split the ingestion path into a <strong>hot tier</strong> (real-time dashboards) and a <strong>warm tier</strong> (everything else). Hot-tier events skip Kafka entirely.</li>
+          <li>Replaced the Kafka-based warm tier with a custom append-only log on <code class="notranslate">NVMe</code> SSDs, fronted by a small Raft group.</li>
+        </ol>
+
+        <p>That last point is the one people want to ask about, so let me save you the trouble: <em>yes</em>, we considered just running a bigger Kafka. <em>Yes</em>, we considered Pulsar and Redpanda. We ran both in shadow for about six weeks. They were good. They weren't right for us — our workload looks nothing like a typical log-streaming workload, because we only ever replay events within a 48-hour window.</p>
+
+        <blockquote>If you're reaching for a distributed log and you only ever read from the tail, you probably don't want a distributed log.</blockquote>
+
+        <h2>A concrete example</h2>
+        <p>Here's the shape of the new hot-tier handler, simplified to the point of dishonesty:</p>
+
+<pre class="notranslate"><code>func (s *Server) Ingest(w http.ResponseWriter, r *http.Request) {
+  evt, err := decode(r.Body)
+  if err != nil {
+    http.Error(w, err.Error(), 400)
+    return
+  }
+  select {
+  case s.hot &lt;- evt:
+    w.WriteHeader(202)
+  default:
+    // Channel full — ask the client to retry.
+    w.WriteHeader(429)
+  }
+}</code></pre>
+
+        <p>The interesting part isn't the code. It's what <em>isn't</em> there: no locks, no fanout, no retries. When the channel is full, we say so. Everything downstream of the channel runs at a predictable pace.</p>
+
+        <h2>What we're watching next</h2>
+        <p>We're not done. The warm tier still leans heavily on <code class="notranslate">ClickHouse</code>, and we're tracking a few new options we'd like to evaluate later this year. We'll post again when we have something worth saying.</p>
+
+        <p>If pipelines like this are your idea of a good time — we're hiring. See you in the Kafka-shaped hole in the ground.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: 0; padding: 0;">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+        <span><a href="index.html">← Back to blog</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+</body>
+</html>

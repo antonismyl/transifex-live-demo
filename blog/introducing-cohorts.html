@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducing Cohorts — Lumen Analytics</title>
+  <meta name="description" content="We rebuilt Lumen's cohort engine from scratch. Here's how it works, and why it's 8× faster.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Blog</a>
+        <a href="../docs/index.html">Docs</a>
+        <a href="../shop/index.html">Shop</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="article container" tx-tags="blog">
+      <header class="prose">
+        <div class="tag">Product</div>
+        <h1>Introducing Cohorts: group users the way your team actually thinks.</h1>
+        <div class="meta">
+          <span class="notranslate">Priya Shah</span>
+          <span>·</span>
+          <time datetime="2026-03-18"><var>Mar 18, 2026</var></time>
+          <span>·</span>
+          <span>6 min read</span>
+        </div>
+      </header>
+
+      <div class="article-body prose">
+        <p>Cohorts have always been the most-used feature in Lumen, and — quietly — the one that most often fell short. Our original engine was built for teams tracking a few hundred thousand events a day. As customers scaled past tens of millions, a "simple" cohort query could take the better part of a minute to return. This week we're rolling out a rebuilt cohort engine. It's faster, more flexible, and — we think — a much better match for how product teams actually talk about their users.</p>
+
+        <h2>What changed</h2>
+        <p>The biggest change is conceptual: cohorts in Lumen are now <em>live</em> by default. When you save a cohort, Lumen keeps it up to date in the background. Open it a week later and the numbers are already there — no re-running, no "stale results" banner, no waiting.</p>
+
+        <p>Under the hood, that meant rewriting the evaluator to incrementally apply new events as they stream in, instead of scanning every event whenever you asked a question. The result: cohorts with millions of members now update in roughly <code class="notranslate">200ms</code> per batch, and <em>ad-hoc</em> exploration queries that used to take 40–60 seconds now come back in under five.</p>
+
+        <h2>A quick example</h2>
+        <p>Here's what the new cohort definition API looks like. If you've used the old <code class="notranslate">/v1/cohorts</code> endpoint, most of this will feel familiar — but <code class="notranslate">windowed</code> and <code class="notranslate">negated</code> predicates are new:</p>
+
+<pre class="notranslate"><code>POST /v2/cohorts
+{
+  "name": "Power users (30d)",
+  "definition": {
+    "all_of": [
+      { "event": "session_started", "count": { "gte": 10 }, "within": "30d" },
+      { "event": "report_exported", "count": { "gte": 1 },  "within": "30d" }
+    ],
+    "none_of": [
+      { "event": "support_ticket_created", "within": "7d" }
+    ]
+  }
+}</code></pre>
+
+        <p>The cohort above answers a question we've heard from dozens of customers: <em>"Who are the users getting real value, but haven't had to escalate to support recently?"</em> Previously, answering that required a detour through SQL or a data warehouse. Now it's three predicates.</p>
+
+        <h2>Why it's faster</h2>
+        <p>Three changes did most of the work:</p>
+        <ol>
+          <li><strong>Roaring bitmaps</strong> for cohort membership — we can union, intersect, and difference millions of user IDs in microseconds.</li>
+          <li><strong>A dedicated materialization layer</strong> that keeps "hot" cohorts in memory and evicts cold ones gracefully.</li>
+          <li><strong>Predicate pushdown</strong> into our columnar store so the engine never pulls rows it doesn't need.</li>
+        </ol>
+
+        <blockquote>We'll go deeper on the engineering in a follow-up post — including the graveyard of approaches that didn't work.</blockquote>
+
+        <h2>Getting started</h2>
+        <p>Cohorts v2 is enabled for all accounts today. Existing cohorts have been migrated automatically; no action needed on your side. If you want to try the new API, grab a token and hit <code class="notranslate">POST /v2/cohorts</code> — the full reference is in the <a href="../docs/index.html">docs</a>.</p>
+
+        <p>As always, we'd love to hear what you build. Drop us a note — we read every message.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: 0; padding: 0;">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+        <span><a href="index.html">← Back to blog</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+</body>
+</html>

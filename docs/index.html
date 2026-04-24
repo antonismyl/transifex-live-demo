@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — Lumen Analytics</title>
+  <meta name="description" content="Documentation for the Lumen Analytics JavaScript SDK, REST API, and the Transifex Live integration on this site.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../blog/index.html">Blog</a>
+        <a href="index.html" class="active">Docs</a>
+        <a href="../shop/index.html">Shop</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container docs-layout">
+    <aside class="docs-nav" aria-label="Docs navigation">
+      <h4>Getting started</h4>
+      <ul>
+        <li><a href="#introduction" class="active">Introduction</a></li>
+        <li><a href="#install">Install the SDK</a></li>
+        <li><a href="#first-event">Send your first event</a></li>
+      </ul>
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="#track">track()</a></li>
+        <li><a href="#identify">identify()</a></li>
+        <li><a href="#api-cohorts">REST: Cohorts</a></li>
+      </ul>
+
+    </aside>
+
+    <div class="docs-body prose">
+      <h2 id="introduction">Introduction</h2>
+      <p>Lumen's JavaScript SDK lets you send events from any web browser with a single script tag. It's designed to be small (under 8 KB gzipped), robust to network failures, and easy to integrate with the rest of your stack.</p>
+      <p>This page is also a working example of a <span class="notranslate">Transifex Live</span> integration — the site uses a custom language picker and several patterns for marking translatable content.</p>
+
+      <h2 id="install">Install the SDK</h2>
+      <p>Add the snippet to your site's <code class="notranslate">&lt;head&gt;</code>. Replace <var>YOUR_PROJECT_KEY</var> with the key from your project settings.</p>
+<pre class="notranslate"><code>&lt;script&gt;
+  (function(l,u,m,e,n){l.lumen=l.lumen||function(){(l.lumen.q=l.lumen.q||[]).push(arguments)};
+  var s=u.createElement(m);s.async=1;s.src=e;var f=u.getElementsByTagName(m)[0];
+  f.parentNode.insertBefore(s,f);})(window,document,'script','https://cdn.lumen.io/v1.js');
+  lumen('init', 'YOUR_PROJECT_KEY');
+&lt;/script&gt;</code></pre>
+
+      <h2 id="first-event">Send your first event</h2>
+      <p>Once the SDK is initialized, any call to <code class="notranslate">lumen('track', …)</code> is buffered until the script loads, then flushed in order.</p>
+<pre class="notranslate"><code>lumen('track', 'signup_completed', {
+  plan: 'pro',
+  referrer: document.referrer
+});</code></pre>
+
+      <h2 id="track">track(eventName, properties)</h2>
+      <p>Records an event for the current user.</p>
+      <table class="kv">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><var>eventName</var></td><td><code class="notranslate">string</code></td><td>Required. Use <code class="notranslate">snake_case</code>. Max 64 characters.</td></tr>
+          <tr><td><var>properties</var></td><td><code class="notranslate">object</code></td><td>Optional. Values must be JSON-serializable.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="identify">identify(userId, traits)</h2>
+      <p>Associates subsequent events with a known user.</p>
+      <table class="kv">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><var>userId</var></td><td><code class="notranslate">string</code></td><td>Required. Your internal user identifier.</td></tr>
+          <tr><td><var>traits</var></td><td><code class="notranslate">object</code></td><td>Optional. User-level properties merged with existing traits.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="api-cohorts">REST: creating a cohort</h2>
+      <p>The REST API accepts authenticated requests with a bearer token. Cohorts created here appear in the Lumen UI within a few seconds.</p>
+<pre class="notranslate"><code>curl -X POST https://api.lumen.io/v2/cohorts \
+  -H "Authorization: Bearer $LUMEN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Weekly active",
+    "definition": {
+      "all_of": [
+        { "event": "session_started", "count": { "gte": 3 }, "within": "7d" }
+      ]
+    }
+  }'</code></pre>
+
+      <h2 id="next-steps">Next steps</h2>
+      <p>To experiment with the <span class="notranslate">Transifex Live</span> integration on your own copy of this demo, swap the placeholder <code class="notranslate">api_key</code> on every page for a real key from your <span class="notranslate">Transifex Live</span> project. Once the snippet loads, the language picker in the top-right activates and page content translates in place — no page reload required.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+          <p style="margin-top: 12px; max-width: 320px;">Product analytics for teams who'd rather ship than configure dashboards.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../index.html#features">Features</a></li>
+            <li><a href="../index.html#pricing">Pricing</a></li>
+            <li><a href="index.html">Docs</a></li>
+            <li><a href="../shop/index.html">Shop</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../blog/index.html">Blog</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">DPA</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Lumen Analytics</title>
+  <meta name="description" content="Lumen merchandise — thoughtfully designed gear for the people who ship the dashboards.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../blog/index.html">Blog</a>
+        <a href="../docs/index.html">Docs</a>
+        <a href="index.html" class="active">Shop</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <p style="padding-top: 24px; font-size: 0.9rem; color: var(--text-muted);">
+      <a href="index.html">Shop</a> <span aria-hidden="true">›</span> <span id="breadcrumb-name">Loading…</span>
+    </p>
+
+    <section class="product-detail" tx-tags="commerce">
+      <div class="gallery">
+        <div id="product-image" style="background: #fafafa; display: flex; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 12px;"></div>
+      </div>
+
+      <div class="info">
+        <div class="tag" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600;" id="product-category">Apparel</div>
+        <h1 id="product-title">Loading…</h1>
+        <p class="price notranslate" id="product-price"></p>
+        <p id="product-description"></p>
+
+        <div class="options" id="size-options" style="display: none;">
+          <label>Size</label>
+          <div class="choices">
+            <button type="button" class="chip notranslate">XS</button>
+            <button type="button" class="chip notranslate">S</button>
+            <button type="button" class="chip selected notranslate">M</button>
+            <button type="button" class="chip notranslate">L</button>
+            <button type="button" class="chip notranslate">XL</button>
+            <button type="button" class="chip notranslate">2XL</button>
+          </div>
+        </div>
+
+        <div class="hero-cta" style="margin-top: 24px;">
+          <button class="btn btn-primary btn-lg" type="button">Add to cart</button>
+          <button class="btn btn-ghost btn-lg" type="button">Save for later</button>
+        </div>
+
+        <dl id="product-specs" style="margin-top: 32px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.9;"></dl>
+      </div>
+    </section>
+
+    <section class="section" style="border-top: 1px solid var(--border); padding: 48px 0 96px;">
+      <h2 style="margin-bottom: 24px;">You might also like</h2>
+      <div class="product-grid" style="padding-bottom: 0;" tx-tags="commerce" id="related-products"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border: 0; padding: 0;">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+        <span><a href="index.html">← Back to shop</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+  <script>
+    (function () {
+      var products = {
+        tee: {
+          name: 'Lumen heavyweight tee',
+          category: 'Apparel',
+          price: '$32.00',
+          description: 'A midnight navy tee in 240-gram combed cotton. Ring-spun yarns, double-stitched hems, and a fit that holds up after fifty washes. Designed by our team, printed in small runs.',
+          hasSizes: true,
+          specs: [
+            { label: 'SKU', value: 'LUM-TEE-01', notranslate: true },
+            { label: 'Fabric', value: '100% combed cotton' },
+            { label: 'Weight', value: '240 gsm' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><path d="M100,80 L140,40 L260,40 L300,80 L360,120 L320,180 L290,160 L290,340 L110,340 L110,160 L80,180 L40,120 Z" fill="#ffffff" stroke="#111113" stroke-width="3" stroke-linejoin="round"/><rect x="185" y="90" width="30" height="18" rx="5" fill="#4F46E5"/></svg>',
+          related: ['hoodie', 'cap', 'stickers']
+        },
+        hoodie: {
+          name: 'Heavyweight hoodie',
+          category: 'Apparel',
+          price: '$74.00',
+          description: 'An indigo hoodie in 450 gsm fleece. Oversized fit with kangaroo pocket, ribbed cuffs, and a drawstring hood. Warm enough for late-night deploys.',
+          hasSizes: true,
+          specs: [
+            { label: 'SKU', value: 'LUM-HOOD-01', notranslate: true },
+            { label: 'Fabric', value: '80/20 cotton-poly fleece' },
+            { label: 'Weight', value: '450 gsm' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><path d="M80,120 L140,60 Q200,20 260,60 L320,120 L360,160 L320,220 L290,190 L290,360 L110,360 L110,190 L80,220 L40,160 Z" fill="#4F46E5" stroke="#111113" stroke-width="3" stroke-linejoin="round"/><path d="M140,60 Q200,90 260,60 L260,110 Q200,140 140,110 Z" fill="#ffffff" opacity="0.15" stroke="#111113" stroke-width="2"/><circle cx="200" cy="150" r="4" fill="#111113"/></svg>',
+          related: ['tee', 'cap', 'mug']
+        },
+        cap: {
+          name: 'Embroidered cap',
+          category: 'Accessories',
+          price: '$28.00',
+          description: 'Washed black twill with an adjustable leather strap back. Low-profile, unstructured fit. Embroidered Lumen logo on the front panel.',
+          hasSizes: false,
+          specs: [
+            { label: 'SKU', value: 'LUM-CAP-01', notranslate: true },
+            { label: 'Material', value: 'Washed cotton twill' },
+            { label: 'Closure', value: 'Adjustable leather strap' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><path d="M80,240 Q200,100 320,240 L320,260 L80,260 Z" fill="#111113" stroke="#111113" stroke-width="3" stroke-linejoin="round"/><path d="M60,260 L340,260 L340,290 Q200,320 60,290 Z" fill="#111113" stroke="#111113" stroke-width="3" stroke-linejoin="round"/><rect x="184" y="180" width="32" height="20" rx="6" fill="#4F46E5"/></svg>',
+          related: ['tee', 'hoodie', 'stickers']
+        },
+        mug: {
+          name: 'Dashboard mug',
+          category: 'Accessories',
+          price: '$18.00',
+          description: '12oz ceramic mug. Holds coffee, tea, or whatever you measure your mornings in. Microwave and dishwasher safe. Features a miniature dashboard print.',
+          hasSizes: false,
+          specs: [
+            { label: 'SKU', value: 'LUM-MUG-01', notranslate: true },
+            { label: 'Material', value: 'Glazed ceramic' },
+            { label: 'Capacity', value: '12 oz / 350 ml' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><rect x="100" y="110" width="180" height="220" rx="12" fill="#ffffff" stroke="#111113" stroke-width="3"/><path d="M280,160 Q350,160 350,220 Q350,280 280,280" fill="none" stroke="#111113" stroke-width="3"/><rect x="124" y="140" width="28" height="16" rx="4" fill="#4F46E5"/><rect x="124" y="170" width="116" height="8" rx="4" fill="#e5e7eb"/><rect x="124" y="188" width="84" height="8" rx="4" fill="#e5e7eb"/></svg>',
+          related: ['notebook', 'stickers', 'tee']
+        },
+        notebook: {
+          name: 'Pocket notebook',
+          category: 'Accessories',
+          price: '$14.00',
+          description: 'A5, dotted. 128 pages of thick, no-bleed paper. Softcover with the Lumen wordmark debossed on the front. Perfect for sketching flows and jotting metrics.',
+          hasSizes: false,
+          specs: [
+            { label: 'SKU', value: 'LUM-NBK-01', notranslate: true },
+            { label: 'Size', value: 'A5 (148 × 210 mm)' },
+            { label: 'Pages', value: '128, 100gsm dotted' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><rect x="90" y="60" width="220" height="280" rx="8" fill="#4F46E5" stroke="#111113" stroke-width="3"/><rect x="90" y="60" width="20" height="280" fill="#111113" opacity="0.25"/><rect x="150" y="160" width="100" height="12" rx="4" fill="#ffffff" opacity="0.85"/><rect x="150" y="190" width="80" height="12" rx="4" fill="#ffffff" opacity="0.6"/></svg>',
+          related: ['mug', 'stickers', 'cap']
+        },
+        stickers: {
+          name: 'Sticker pack',
+          category: 'Accessories',
+          price: '$8.00',
+          description: 'Six vinyl stickers, weather-resistant. Includes the Lumen logo, dashboard icons, and a few in-jokes. Great on laptops, bad on sofas.',
+          hasSizes: false,
+          specs: [
+            { label: 'SKU', value: 'LUM-STK-01', notranslate: true },
+            { label: 'Material', value: 'Vinyl, weather-resistant' },
+            { label: 'Count', value: '6 stickers' },
+            { label: 'Shipping', value: 'Free over $60' }
+          ],
+          svg: '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="70%" height="70%"><rect width="400" height="400" fill="#fafafa"/><rect x="80" y="80" width="120" height="120" rx="20" fill="#4F46E5" stroke="#111113" stroke-width="3" transform="rotate(-8 140 140)"/><rect x="200" y="120" width="120" height="120" rx="20" fill="#ffffff" stroke="#111113" stroke-width="3" transform="rotate(4 260 180)"/><rect x="140" y="200" width="120" height="120" rx="20" fill="#111113" stroke="#111113" stroke-width="3" transform="rotate(-2 200 260)"/></svg>',
+          related: ['mug', 'notebook', 'tee']
+        }
+      };
+
+      // Small SVGs for related product cards
+      var thumbSvgs = {
+        tee: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><path d="M50,40 L70,20 L130,20 L150,40 L180,60 L160,90 L145,80 L145,170 L55,170 L55,80 L40,90 L20,60 Z" fill="#ffffff" stroke="#111113" stroke-width="2" stroke-linejoin="round"/><rect x="92" y="40" width="16" height="10" rx="3" fill="#4F46E5"/></svg>',
+        hoodie: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><path d="M40,60 L70,30 Q100,10 130,30 L160,60 L180,80 L160,110 L145,95 L145,180 L55,180 L55,95 L40,110 L20,80 Z" fill="#4F46E5" stroke="#111113" stroke-width="2" stroke-linejoin="round"/><path d="M70,30 Q100,45 130,30 L130,55 Q100,70 70,55 Z" fill="#ffffff" opacity="0.15" stroke="#111113" stroke-width="1.5"/></svg>',
+        cap: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><path d="M40,120 Q100,50 160,120 L160,130 L40,130 Z" fill="#111113" stroke="#111113" stroke-width="2" stroke-linejoin="round"/><path d="M30,130 L170,130 L170,145 Q100,160 30,145 Z" fill="#111113" stroke="#111113" stroke-width="2" stroke-linejoin="round"/><rect x="92" y="90" width="16" height="10" rx="3" fill="#4F46E5"/></svg>',
+        mug: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><rect x="50" y="55" width="90" height="110" rx="6" fill="#ffffff" stroke="#111113" stroke-width="2"/><path d="M140,80 Q175,80 175,110 Q175,140 140,140" fill="none" stroke="#111113" stroke-width="2"/><rect x="62" y="70" width="14" height="8" rx="2" fill="#4F46E5"/><rect x="62" y="85" width="58" height="4" rx="2" fill="#e5e7eb"/><rect x="62" y="94" width="42" height="4" rx="2" fill="#e5e7eb"/></svg>',
+        notebook: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><rect x="45" y="30" width="110" height="140" rx="4" fill="#4F46E5" stroke="#111113" stroke-width="2"/><rect x="45" y="30" width="10" height="140" fill="#111113" opacity="0.25"/><rect x="75" y="80" width="50" height="6" rx="2" fill="#ffffff" opacity="0.85"/><rect x="75" y="95" width="40" height="6" rx="2" fill="#ffffff" opacity="0.6"/></svg>',
+        stickers: '<svg viewBox="0 0 200 200" width="70%" height="70%" aria-hidden="true"><rect x="40" y="40" width="60" height="60" rx="10" fill="#4F46E5" stroke="#111113" stroke-width="2" transform="rotate(-8 70 70)"/><rect x="100" y="60" width="60" height="60" rx="10" fill="#ffffff" stroke="#111113" stroke-width="2" transform="rotate(4 130 90)"/><rect x="70" y="100" width="60" height="60" rx="10" fill="#111113" stroke="#111113" stroke-width="2" transform="rotate(-2 100 130)"/></svg>'
+      };
+
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get('id') || 'tee';
+      var product = products[id] || products.tee;
+
+      // Update page
+      document.title = product.name + ' — Lumen Analytics';
+      document.querySelector('meta[name="description"]').content = product.name + ' — ' + product.description;
+      document.getElementById('breadcrumb-name').textContent = product.name;
+      document.getElementById('product-title').textContent = product.name;
+      document.getElementById('product-price').textContent = product.price;
+      document.getElementById('product-description').textContent = product.description;
+      document.getElementById('product-category').textContent = product.category;
+      document.getElementById('product-image').innerHTML = product.svg;
+
+      if (product.hasSizes) {
+        document.getElementById('size-options').style.display = '';
+      }
+
+      // Specs
+      var specsHtml = '';
+      product.specs.forEach(function (s) {
+        specsHtml += '<div style="display: flex; gap: 12px;">';
+        specsHtml += '<dt style="width: 120px; color: var(--text-subtle);">' + s.label + '</dt>';
+        specsHtml += '<dd' + (s.notranslate ? ' class="notranslate"' : '') + ' style="margin: 0;">' + s.value + '</dd>';
+        specsHtml += '</div>';
+      });
+      document.getElementById('product-specs').innerHTML = specsHtml;
+
+      // Related products
+      var relatedHtml = '';
+      product.related.forEach(function (rid) {
+        var rp = products[rid];
+        if (!rp) return;
+        relatedHtml += '<article class="product">';
+        relatedHtml += '<a href="product.html?id=' + rid + '"><div class="thumb">' + thumbSvgs[rid] + '</div></a>';
+        relatedHtml += '<div class="body">';
+        relatedHtml += '<a href="product.html?id=' + rid + '"><h3>' + rp.name + '</h3></a>';
+        relatedHtml += '<p class="desc">' + rp.description.split('.')[0] + '.</p>';
+        relatedHtml += '<div class="row"><span class="price notranslate">' + rp.price + '</span></div>';
+        relatedHtml += '</div></article>';
+      });
+      document.getElementById('related-products').innerHTML = relatedHtml;
+    })();
+  </script>
+</body>
+</html>

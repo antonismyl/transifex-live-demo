@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Lumen Analytics</title>
+  <meta name="description" content="Product notes, engineering deep-dives, and design thinking from the team at Lumen Analytics.">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+
+  <script type="text/javascript">
+    window.liveSettings = {
+      api_key: "YOUR_API_KEY_HERE",
+      picker: "#tx-live-lang-picker",
+      autocollect: true,
+      dynamic: true,
+      translate_urls: true
+    };
+  </script>
+  <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Blog</a>
+        <a href="../docs/index.html">Docs</a>
+        <a href="../shop/index.html">Shop</a>
+        <a href="../index.html#pricing">Pricing</a>
+      </nav>
+      <span class="nav-spacer"></span>
+      <div class="nav-right">
+        <select id="tx-live-lang-picker" class="picker notranslate" aria-label="Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a href="#" class="btn btn-primary">Start free</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-hero">
+      <div class="container">
+        <span class="eyebrow">Blog</span>
+        <h1>Notes from the Lumen team.</h1>
+        <p class="lede">Product announcements, engineering deep-dives, and the occasional opinion about dashboards.</p>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom: 96px;">
+      <div class="article-grid">
+        <article class="article-card" tx-tags="blog">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect width="480" height="270" fill="#eef2ff"/>
+              <circle cx="120" cy="135" r="40" fill="#4F46E5" opacity="0.2"/>
+              <circle cx="240" cy="135" r="60" fill="#4F46E5" opacity="0.35"/>
+              <circle cx="360" cy="135" r="40" fill="#4F46E5" opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="tag">Product</div>
+            <h3><a href="introducing-cohorts.html">Introducing Cohorts: group users the way your team actually thinks.</a></h3>
+            <p class="excerpt">We rebuilt Lumen's cohort engine from scratch. Here's how it works, and why it's 8× faster.</p>
+            <div class="meta">
+              <span class="notranslate">Priya Shah</span>
+              <span class="sep">·</span>
+              <time datetime="2026-03-18"><var>Mar 18, 2026</var></time>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card" tx-tags="blog">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect width="480" height="270" fill="#f4f4f5"/>
+              <g stroke="#4F46E5" stroke-width="2" fill="none">
+                <path d="M40,220 L120,180 L200,160 L280,120 L360,100 L440,60"/>
+                <path d="M40,240 L120,220 L200,200 L280,180 L360,160 L440,140" opacity="0.5"/>
+              </g>
+              <g fill="#4F46E5">
+                <circle cx="120" cy="180" r="4"/>
+                <circle cx="200" cy="160" r="4"/>
+                <circle cx="280" cy="120" r="4"/>
+                <circle cx="360" cy="100" r="4"/>
+              </g>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="tag">Engineering</div>
+            <h3><a href="scaling-event-pipelines.html">Scaling our event pipeline to a billion events a day.</a></h3>
+            <p class="excerpt">Partitioning, back-pressure, and why we finally moved off Kafka for the hot path.</p>
+            <div class="meta">
+              <span class="notranslate">Marcus Lindqvist</span>
+              <span class="sep">·</span>
+              <time datetime="2026-02-24"><var>Feb 24, 2026</var></time>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card" tx-tags="blog">
+          <div class="thumb" aria-hidden="true">
+            <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect width="480" height="270" fill="#fafafa"/>
+              <rect x="80"  y="80"  width="140" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+              <rect x="260" y="80"  width="140" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+              <rect x="100" y="100" width="80"  height="8"  rx="2" fill="#d1d5db"/>
+              <rect x="100" y="116" width="60"  height="8"  rx="2" fill="#e5e7eb"/>
+              <rect x="100" y="160" width="40"  height="14" rx="3" fill="#4F46E5"/>
+              <rect x="280" y="100" width="80"  height="8"  rx="2" fill="#d1d5db"/>
+              <rect x="280" y="116" width="60"  height="8"  rx="2" fill="#e5e7eb"/>
+              <rect x="280" y="160" width="40"  height="14" rx="3" fill="#111113"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="tag">Design</div>
+            <h3><a href="designing-for-clarity.html">Designing for clarity: what we learned redesigning our dashboard.</a></h3>
+            <p class="excerpt">A tour through the design decisions behind Lumen's new dashboard — and the ones we undid.</p>
+            <div class="meta">
+              <span class="notranslate">Sofia Romano</span>
+              <span class="sep">·</span>
+              <time datetime="2026-01-30"><var>Jan 30, 2026</var></time>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="../index.html" class="brand"><span class="brand-mark notranslate" aria-hidden="true"></span><span class="notranslate">Lumen Analytics</span></a>
+          <p style="margin-top: 12px; max-width: 320px;">Product analytics for teams who'd rather ship than configure dashboards.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../index.html#features">Features</a></li>
+            <li><a href="../index.html#pricing">Pricing</a></li>
+            <li><a href="../docs/index.html">Docs</a></li>
+            <li><a href="../shop/index.html">Shop</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="index.html">Blog</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">DPA</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <var>2026</var> <span class="notranslate">Lumen Analytics, Inc.</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="tx-badge" class="tx-badge notranslate" role="status" aria-live="polite"></div>
+  <script src="../assets/main.js"></script>
+</body>
+</html>
